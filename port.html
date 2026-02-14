@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sureewan Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/5.1/line/lineicons.css" rel="stylesheet">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-light: #ffffff;
+            --text-dark: #111111;
+            --text-muted: #888888;
+            --accent: #6b46c1; /* Electric Purple */
+            --accent-soft: rgba(107, 70, 193, 0.1);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Anuphan', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body:lang(th) {
+            font-family: "Noto Sans Thai", sans-serif;
+        }
+
+        /* --- Sidebar Navigation --- */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: #fff;
+            padding: 60px 40px;
+            z-index: 1000;
+            border-right: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            
+            /* เพิ่มบรรทัดนี้ครับ */
+            overflow-y: auto; /* ให้เลื่อนแนวตั้งได้ */
+        }
+
+                /* ตกแต่ง Scrollbar เฉพาะใน Sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px; /* ความกว้างของแกน */
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent; /* พื้นหลังแกนโปร่งใส */
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #f0f0f0; /* สีของตัวเลื่อน */
+            border-radius: 20px;       /* ความมน */
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background-color: var(--accent); /* เปลี่ยนสีเมื่อเอาเมาส์ชี้ */
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-menu li { margin-bottom: 18px; }
+
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--text-dark);
+            transform: translateX(8px);
+        }
+
+        .nav-menu a.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .client-list {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .client-list h3 {
+            font-size: 10px;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .client-list ul { list-style: none; color: var(--text-muted); font-size: 13px; }
+        .client-list li { margin-bottom: 8px; }
+
+        .lang-switch {
+            margin-top: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .lang { cursor: pointer; color: #ccc; transition: 0.3s; }
+        .lang.active { color: var(--text-dark); }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        .content-section {
+            padding: 100px 80px;
+            max-width: 1200px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(35px, 7vw, 75px);
+            line-height: 1;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+
+            min-height: 3em;      /* 🔥 ล็อกความสูง */
+            display: inline-block;
+        }
+
+
+        .hero-text .outline {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-dark);
+        }
+
+        .hero-text .dot { color: var(--accent); }
+
+        .hero-text h1::after {
+            content: "";
+            display: inline-block;
+            width: 4px;          /* 👈 ความหนา */
+            height: 1em;
+            background: currentColor;
+            margin-left: 8px;
+            animation: blink 01s infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--text-dark);
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* --- Education Section Styles --- */
+        .timeline {
+            margin-top: 20px;
+        }
+
+        .timeline-item {
+            padding-bottom: 40px;
+            border-left: 1px solid #eee;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            background: var(--text-dark);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent);
+            transform: scale(1.5);
+        }
+
+        .timeline-item .year {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .edu-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fdfdfd;
+            padding: 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .edu-content {
+            background: #f9f6ff;
+            transform: translateX(10px);
+        }
+
+        .school-logo {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            overflow: hidden;
+        }
+
+        .school-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .school-logo img {
+            filter: grayscale(0%);
+        }
+
+        .edu-text h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .edu-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* --- About Container --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        /* --- Skills Section ปรับปรุงใหม่ --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* เอฟเฟกต์โผล่ขึ้นมาทีละใบ (Staggered) */
+        .content-section.visible .skill-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.1s; }
+        .skill-card:nth-child(2) { animation-delay: 0.2s; }
+        .skill-card:nth-child(3) { animation-delay: 0.3s; }
+        .skill-card:nth-child(4) { animation-delay: 0.4s; }
+        .skill-card:nth-child(5) { animation-delay: 0.5s; }
+        .skill-card:nth-child(6) { animation-delay: 0.6s; }
+        .skill-card:nth-child(7) { animation-delay: 0.7s; }
+
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .skill-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.5;
+            transition: 0.4s;
+        }
+
+        .skill-card h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        /* หลอดระดับความชำนาญ */
+        .skill-level-wrapper {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            opacity: 0; /* ซ่อนไว้ก่อน */
+            transition: 0.4s;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 10px;
+            transform: translateX(-100%); /* เริ่มจากซ้ายสุด */
+            transition: 1s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .skill-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        /* Hover States */
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.15);
+            background: #fdfbff;
+        }
+
+        .skill-card:hover .skill-icon img {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1) rotate(5deg); /* หมุนนิดๆ ให้ดูมีพลัง */
+        }
+
+        .skill-card:hover .skill-level-wrapper {
+            opacity: 1;
+        }
+
+        .skill-card:hover .skill-level {
+            transform: translateX(0); /* วิ่งเข้ามาเมื่อ hover */
+        }
+
+        .skill-card:hover .skill-tag {
+            opacity: 1;
+        }
+
+        /* แก้ไข Animation หลัก */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Portfolio Grid --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .portfolio-item { position: relative; }
+        .portfolio-item:nth-child(even) { margin-top: 40px; }
+
+        .portfolio-img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: #f5f5f5;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        /* --- Contact --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 12px;
+            border: none;
+            border-bottom: 1px solid #eee;
+            outline: none;
+            font-family: inherit;
+        }
+
+        /* --- Social Media Buttons CSS --- */
+        .social-icons-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            background-color: #f5f5f5; /* ปกติสีขาวเทา */
+            color: var(--text-dark);   /* ไอคอนสีดำ */
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .social-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover Effects */
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: #ffffff; /* เปลี่ยนไอคอนเป็นสีขาวเมื่อ hover */
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .social-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* สีเฉพาะแบรนด์เมื่อ Hover */
+        .social-btn.github:hover {
+            background-color: #333333;
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #1877F2;
+        }
+
+        .social-btn.instagram:hover {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        .social-btn.x-twitter:hover {
+            background-color: #000000;
+        }
+
+
+        /* --- Hamburger --- */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            cursor: pointer;
+            background: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text-dark);
+            margin: 4px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { width: 220px; padding: 40px 20px; }
+            .main-content { margin-left: 220px; }
+            .content-section { padding: 80px 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { left: -100%; width: 260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; }
+            .hamburger { display: block; }
+            .hero-text h1 { font-size: 40px; }
+            .about-container, .portfolio-grid, .contact-container { grid-template-columns: 1fr; }
+            .portfolio-item:nth-child(even) { margin-top: 0; }
+            .edu-content { flex-direction: row; }
+        }
+
+        /* --- ปรับปรุง About Me ใหม่ --- */
+        .about-image-wrapper {
+            position: relative;
+            padding: 20px;
+        }
+
+        .image-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            height: 90%;
+            border: 2px solid var(--accent);
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .about-image {
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        }
+
+
+        /* Badge แสดงจำนวนปี */
+        .experience-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--text-dark);
+            color: #fff;
+            padding: 20px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(-20px);
+        }
+
+        .experience-badge .num {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .experience-badge .txt {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        /* Highlight Text */
+        .highlight {
+            color: var(--text-dark);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--accent-soft);
+            z-index: -1;
+        }
+
+        /* Quick Info Grid */
+        .quick-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-item .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .info-item .val {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .quick-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .experience-badge {
+                padding: 15px;
+                right: 20px;
+            }
+        }
+
+        /* --- Projects Section ปรับปรุงใหม่ --- */
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 120px; /* เว้นระยะระหว่างโปรเจกต์ */
+    margin-top: 50px;
+}
+
+.project-showcase {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* สลับฝั่งภาพสำหรับโปรเจกต์คู่ */
+.project-showcase:nth-child(even) {
+    grid-template-columns: 0.8fr 1.2fr;
+}
+.project-showcase:nth-child(even) .project-visuals {
+    order: 2;
+}
+.project-showcase:nth-child(even) .project-content {
+    order: 1;
+}
+
+/* ส่วนรูปภาพ */
+.project-visuals {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 15px;
+    position: relative;
+}
+
+.main-img {
+    height: 450px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f0f0f0;
+}
+
+.main-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.side-imgs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.side-imgs img {
+    height: calc(225px - 7.5px);
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+/* Hover Effect: เมื่อเอาเมาส์วาง ภาพจะเปลี่ยนเป็นสีและขยาย */
+.project-showcase:hover .main-img img,
+.project-showcase:hover .side-imgs img {
+    transform: scale(1.05);
+}
+
+/* ส่วนเนื้อหา */
+.project-header .category {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.project-header h3 {
+    font-size: 32px;
+    margin: 10px 0 20px;
+    font-weight: 800;
+}
+
+.project-description p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.activity-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.activity-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.activity-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Tags */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-tags span {
+    padding: 6px 15px;
+    background: #f5f5f5;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 100px;
+    transition: var(--transition);
+}
+
+.project-showcase:hover .project-tags span {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+/* Mobile Responsive */
+@media (max-width: 992px) {
+    .project-showcase, .project-showcase:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .project-visuals {
+        order: 1 !important;
+    }
+    .project-content {
+        order: 2 !important;
+    }
+    .main-img {
+        height: 300px;
+    }
+    .side-imgs {
+        flex-direction: row;
+    }
+    .side-imgs img {
+        height: 100px;
+    }
+}
+
+/* --- Certificate Gallery Styles (เพิ่มใหม่) --- */
+        .cert-gallery-wrapper {
+            margin-top: 100px; /* เว้นระยะห่างจากโปรเจกต์ด้านบน */
+            padding-top: 50px;
+            border-top: 1px solid #eee;
+        }
+
+        .cert-gallery-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* แบ่งเป็น 3 คอลัมน์เท่ากัน */
+            gap: 30px;
+        }
+
+        .cert-item {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            transition: var(--transition);
+        }
+
+        .cert-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-color: var(--accent-soft);
+        }
+
+        .cert-img-box {
+            width: 100%;
+            aspect-ratio: 4/3; /* อัตราส่วนภาพ 4:3 */
+            overflow: hidden;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+
+        .cert-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ให้ภาพเต็มกรอบโดยไม่เสียสัดส่วน */
+            transition: transform 0.5s ease;
+        }
+
+        .cert-item:hover .cert-img-box img {
+            transform: scale(1.05); /* ซูมภาพนิดหน่อยตอนเอาเมาส์ชี้ */
+        }
+
+        .cert-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ปรับมือถือ: ให้เรียงเป็นแถวเดียว */
+        @media (max-width: 768px) {
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+    </div>
+
+    <aside class="sidebar">
+        <div class="logo">Personal <br> Website<span style="color:var(--accent)">.</span></div>
+        
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#Home" class="active" data-en="Home"><i class="lni lni-home-2" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i>Home</a></li>
+                <li><a href="#aboutme" data-en="About Me"><i class="lni lni-user-4" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i>About Me</a></li>
+                <li><a href="#education" data-en="Education"><i class="lni lni-book-1" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i>Education</a></li>
+                <li><a href="#skills" data-en="Skills"><i class="lni lni-location-arrow-right" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i>Skills</a></li>
+                <li><a href="#Certificated" data-en="Certificated"><i class="lni lni-file-multiple" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i>Certificated</a></li>
+                <li><a href="#contact" data-en="Contact"><i class="lni lni-telephone-3" style="vertical-align: middle; font-size: 20px; margin-right: 10px;"></i></i>Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="client-list">
+            <h3 data-en="My Status">My Status</h3>
+            <ul>
+                <li data-en="Student">Student</li>
+                <li data-en="Programmer">Programmer</li>
+                <li data-en="Web Developer">Web Developer</li>
+            </ul>
+        </div>
+
+        <div class="lang-switch">
+            <span id="lang-th" class="lang">TH</span> | 
+            <span id="lang-en" class="lang active">EN</span>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <!-- Section: Home -->
+        <section id="Home" class="content-section hero-section visible">
+            <div class="hero-text">
+                <h1 id="typing-text"
+                    data-th="STUDENT<br><span class='outline'>PROGRAMMER</span><br>WEB DEVELOPER<span class='dot'>.</span>"
+                    data-en="STUDENT<br><span class='outline'>PROGRAMMER</span><br>WEB DEVELOPER<span class='dot'>.</span>">
+                </h1>
+
+                <p style="color: var(--text-muted); margin-bottom: 30px;" data-th="สวัสดี! ฉันชื่อ สุรีวรรณ ทัพภะสารพงศ์ นักเรียนและนักพัฒนาเว็บไซต์ที่เน้นความเรียบง่ายแต่ทรงพลัง" 
+                   data-en="Hi! I'm Sureewan Thapphasaraphong. <br> A Student & Web Developer focused on minimalist and functional design.">
+                   Hi! I'm Sureewan Thapphasaraphong. <br> A Student & Web Developer focused on minimalist and functional design.
+                </p>
+                <a href="#Projects" class="cta-button" data-th="ดูผลงาน" data-en="View Projects">View Projects</a>
+            </div>
+        </section>
+
+        <!-- Section: About Me -->
+        <section id="aboutme" class="content-section">
+            <div class="about-container">
+                <!-- ฝั่งรูปภาพที่มีลูกเล่น -->
+                <div class="about-image-wrapper">
+                    <div class="image-border"></div>
+                    <div class="about-image">
+                        <img src="picture/mee.png" alt="Sureewan">
+                    </div>
+                    <div class="experience-badge">
+                        <span class="num">2+</span>
+                        <span class="txt" data-en="Years<br>Coding" data-th="ปีที่<br>เขียนโค้ด">Years<br>Coding</span>
+                    </div>
+                </div>
+
+                <!-- ฝั่งเนื้อหา -->
+                <div class="about-text">
+                    <h2 class="section-title" data-en="About Me" data-th="เกี่ยวกับฉัน">About Me</h2>
+                    
+                    <p class="bio-text" data-th="สวัสดี! ฉันชื่อ <span class='highlight'>สุรีย์วรรณ ทัพพสารพงศ์</span> ฉันเป็นนักเรียนมัธยมศึกษาตอนปลายผู้มีความสนใจด้านการเขียนโปรแกรมและโครงงานวิทยาศาสตร์ มีพื้นฐานด้านการพัฒนาโปรแกรมและการสร้างเว็บเพจ พร้อมความตั้งใจพัฒนาทักษะการคิดวิเคราะห์และการแก้ไขปัญหาเชิงระบบ เพื่อนำความรู้ไปประยุกต์ใช้กับเทคโนโลยีและนวัตกรรมอย่างมีประสิทธิภาพ" 
+                    data-en="Hi! I'm <span class='highlight'>Sureewan Thappasaraphong</span>. I am a senior high school student with a strong interest in programming and science projects. I have foundational experience in software development and web development, and I am committed to strengthening my analytical thinking and systematic problem-solving skills to effectively apply technology and innovation in practical contexts.">
+                    Hi! I'm <span class="highlight">Sureewan Thappasaraphong</span>.I am a senior high school student with a strong interest in programming and science projects. I have foundational experience in software development and web development, and I am committed to strengthening my analytical thinking and systematic problem-solving skills to effectively apply technology and innovation in practical contexts.
+                    </p>
+
+                    <!-- ตารางข้อมูลสรุป (เพิ่มช่องอายุแล้ว) -->
+                    <div class="quick-info-grid">
+                        <div class="info-item">
+                            <span class="label" data-en="Age" data-th="อายุ">Age</span>
+                            <span class="val" data-en="17 Years" data-th="17 ปี">17 Years</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label" data-en="Location" data-th="Location">Location</span>
+                            <span class="val" data-en="Khon Kaen, Thailand" data-th="ขอนแก่น, ประเทศไทย">Khon Kaen, Thailand</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label" data-en="Interests" data-th="ความสนใจ">Interests</span>
+                            <span class="val" data-en="Web Tech, UI/UX, Coding" data-th="Web Tech, UI/UX, Coding">Web Tech, UI/UX, Coding</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label" data-en="Motto" data-th="คติประจำใจ">Motto</span>
+                            <span class="val" data-en="Code with Passion" data-th="เขียนโค้ดด้วยใจ">Code with Passion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Education -->
+        <section id="education" class="content-section">
+            <h2 class="section-title" data-en="Education" data-th="ประวัติการศึกษา">Education</h2>
+            <div class="timeline">
+                
+                <!-- โรงเรียนที่ 1 -->
+                <div class="timeline-item">
+                    <span class="year">2012 - 2017</span>
+                    <div class="edu-content">
+                        <div class="school-logo">
+                            <!-- ใส่ URL ตราโรงเรียนตรงนี้ -->
+                            <img src="picture/ตรารร.jpg" alt="KKU Logo">
+                        </div>
+                        <div class="edu-text">
+                            <h4 data-en="Primary School" data-th="ระดับประถมศึกษา">Primary School</h4>
+                            <p data-en="Demonstration School Of Khon Kaen University (IEC)" data-th="โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น หลักสูตร IEC (Intensive English Course)">Demonstration School Of Khon Kaen University</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- โรงเรียนที่ 2 -->
+                <div class="timeline-item">
+                    <span class="year">2018 - 2020</span>
+                    <div class="edu-content">
+                        <div class="school-logo">
+                            <img src="picture/ตรารร.jpg" alt="KKU Logo">
+                        </div>
+                        <div class="edu-text">
+                            <h4 data-en="Lower Secondary School" data-th="ระดับมัธยมศึกษาตอนต้น">Lower Secondary School</h4>
+                            <p data-en="Demonstration School Of Khon Kaen University (JEMS Program)" data-th="โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น JEMS Program (Junior High School English–Mathematics–Science Program)">Demonstration School Of Khon Kaen University (JEMS Program)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- โรงเรียนที่ 3 -->
+                <div class="timeline-item">
+                    <span class="year">2021 - Present</span>
+                    <div class="edu-content">
+                        <div class="school-logo">
+                            <img src="picture/ตรารร.jpg" alt="KKU Logo">
+                        </div>
+                        <div class="edu-text">
+                            <h4 data-en="Upper Secondary School" data-th="ระดับมัธยมศึกษาตอนปลาย">Upper Secondary School</h4>
+                            <p data-en="Demonstration School Of Khon Kaen University (SEMS Program)" data-th="โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น SEMS Program (Senior High School English–Mathematics–Science Program)">Demonstration School Of Khon Kaen University (SEMS Program)</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section: Skills -->
+        <section id="skills" class="content-section">
+            <h2 class="section-title" data-en="Programming Skills">Programming Skills</h2>
+            <div class="skills-grid">
+
+                <!-- C -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="picture/C.png" alt="C">
+                    </div>
+                    <h4>C</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 65%;"></div>
+                    </div>
+                    <span class="skill-tag">Basic</span>
+                </div>
+                
+                <!-- C++ -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+                    </div>
+                    <h4>C++</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 65%;"></div>
+                    </div>
+                    <span class="skill-tag">Basic</span>
+                </div>
+
+                <!-- Python -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    </div>
+                    <h4>Python</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 65%;"></div>
+                    </div>
+                    <span class="skill-tag">Basic</span>
+                </div>
+                
+                <!-- Javascript -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="Javascript">
+                    </div>
+                    <h4>Javascript</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 65%;"></div>
+                    </div>
+                    <span class="skill-tag">Basic</span>
+                </div>
+
+                <!-- HTML -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                    </div>
+                    <h4>HTML</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                    <span class="skill-tag">Intermediate</span>
+                </div>
+
+                <!-- CSS -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    </div>
+                    <h4>CSS</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                    <span class="skill-tag">Intermediate</span>
+                </div>
+                
+                <!-- UI Design -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="UI Design">
+                    </div>
+                    <h4>UI Design</h4>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                    <span class="skill-tag">Intermediate</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Section: Projects -->
+        <section id="Certificated" class="content-section">
+            <h2 class="section-title" data-en="Certificated" data-th="Certificated">Certificated</h2>
+            
+            <div class="projects-container">
+                
+                <!-- Project 1 -->
+                <div class="project-showcase">
+                    <div class="project-visuals">
+                        <div class="main-img">
+                            <img src="picture/innovation.jpg" alt="Work 1">
+                        </div>
+                        <div class="side-imgs">
+                            <img src="picture/I New Gen Certificate.jpg" alt="Detail 1">
+                            <img src="picture/me.jpg" alt="Detail 2">
+                        </div>
+                    </div>
+                    
+                    <div class="project-content">
+                        <div class="project-header">
+                            <span class="category">Innovative Invention</span>
+                            <h3 data-en="Thailand New Gen Award 2026">Thailand New Gen Award 2026</h3>
+                        </div>
+                        <div class="project-description">
+                            <p data-en="Participated in the Thailand New Gen Award 2026 innovation and invention competition (Agricultural Category, Secondary Education Level) and received a Gold Medal Award." 
+                            data-th="โซลูชันบนมือถือที่ออกแบบมาเพื่อติดตามกิจกรรมประจำวันและให้ข้อมูลสุขภาพด้วย AI บทบาทของฉันคือการทำวิจัย UI/UX และการสร้างตัวต้นแบบ">
+                            Participated in the Thailand New Gen Award 2026 innovation and invention competition (Agricultural Category, Secondary Education Level) and received a Gold Medal Award.
+                            </p>
+                            <ul class="activity-list">
+                                <li data-en="Designed and developed a website integrated with an invention." data-th="ออกแบบและสร้างเว็บไซต์ประยุกต์ร่วมกับสิ่งประดืษฐ์">Designed and developed a website integrated with an invention.</li>
+                                <li data-en="Programmed and deployed C/C++ code to an Arduino board to control sensors and electronic components based on system requirements." data-th="พัฒนาและเขียนโปรแกรมด้วยภาษา C/C++ สำหรับบอร์ด Arduino เพื่อควบคุมการทำงานของเซนเซอร์และอุปกรณ์อิเล็กทรอนิกส์ตามข้อกำหนดของระบบ">Programmed and deployed C/C++ code to an Arduino board to control sensors and electronic components based on system requirements.s</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span>Html</span>
+                            <span>CSS</span>
+                            <span>Javascript</span>
+                            <span>C++</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-showcase">
+                    <div class="project-visuals invert">
+                        <div class="main-img">
+                            <img src="picture/airpollute.png" alt="Work 2">
+                        </div>
+                        <div class="side-imgs">
+                            <img src="picture/phone.png" alt="Detail 3">
+                            <img src="picture/ipad.png" alt="Detail 4">
+                        </div>
+                    </div>
+                    
+                    <div class="project-content">
+                        <div class="project-header">
+                            <span class="category">Web Platform</span>
+                            <h3 data-en="Diagnoses-diseases Website">Diagnoses-diseases Website</h3>
+                        </div>
+                        <div class="project-description">
+                            <p data-en="Developed a web application that analyzes user-reported symptoms to provide preliminary disease assessments using a self-developed AI model. Integrated external APIs to display real-time air quality (AQI) and temperature data." 
+                            data-th="ออกแบบและพัฒนา Web Application สำหรับวิเคราะห์อาการและประเมินความเสี่ยงของโรคด้วยโมเดล AI ที่พัฒนาขึ้นเอง รวมถึงการเชื่อมต่อ API ภายนอกเพื่อดึงข้อมูลคุณภาพอากาศ (AQI) และสภาพอากาศปัจจุบันแบบเรียลไทม์">
+                            Developed a web application that analyzes user-reported symptoms to provide preliminary disease assessments using a self-developed AI model. Integrated external APIs to display real-time air quality (AQI) and temperature data.
+                            </p>
+                            <ul class="activity-list">
+                                <li data-en="Capable of analyzing user-reported symptoms to provide preliminary disease assessment using an AI-based system." data-th="พัฒนาระบบที่สามารถวิเคราะห์อาการของผู้ใช้และประเมินความเป็นไปได้ของโรคเบื้องต้นด้วยโมเดล AI">Capable of analyzing user-reported symptoms to provide preliminary disease assessment using an AI-based system.</li>
+                                <a href="https://kubbbbb.github.io/Diagnoses-diseases/"><li data-en="Click to view Website" data-th="คลิกเพื่อไปยังเว็บไซต์">Click to view Website</li></a>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span>Html</span>
+                            <span>CSS</span>
+                            <span>Javascript</span>
+                            <span>C++</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate Gallery -->
+            <div class="cert-gallery-wrapper">
+                <h3 class="cert-gallery-title" data-en="Other Certificates" data-th="เกียรติบัตรอื่นๆ">Other Certificates</h3>
+                
+                <div class="cert-grid">
+                    
+                    <!-- รูปที่ 1 -->
+                    <div class="cert-item">
+                        <div class="cert-img-box">
+                            <!-- เปลี่ยนชื่อไฟล์รูปตรงนี้ -->
+                            <img src="picture/cert1.jpg" alt="Certificate 1">
+                        </div>
+                        <p class="cert-desc" 
+                           data-en="Hack The Scammer CTF 2025">
+                           Hack The Scammer CTF 2025
+                        </p>
+                    </div>
+
+                    <!-- รูปที่ 2 -->
+                    <div class="cert-item">
+                        <div class="cert-img-box">
+                            <!-- เปลี่ยนชื่อไฟล์รูปตรงนี้ -->
+                            <img src="picture/cert2.jpg" alt="Certificate 2">
+                        </div>
+                        <p class="cert-desc" 
+                           data-en="Woman Thailand Cyber Top Talen 2025">
+                           Woman Thailand Cyber Top Talent 2025
+                        </p>
+                    </div>
+
+                    <!-- รูปที่ 3 -->
+                    <div class="cert-item">
+                        <div class="cert-img-box">
+                            <!-- เปลี่ยนชื่อไฟล์รูปตรงนี้ -->
+                            <img src="picture/cert3.jpg" alt="Certificate 3">
+                        </div>
+                        <p class="cert-desc" 
+                           data-en="Narrative Game Design and Visual Novel Development Online Program">
+                          Narrative Game Design and Visual Novel Development Online Program
+                        </p>
+                    </div>
+
+                    <div class="cert-item">
+                        <div class="cert-img-box">
+                            <!-- เปลี่ยนชื่อไฟล์รูปตรงนี้ -->
+                            <img src="picture/cert4.jpg" alt="Certificate 3">
+                        </div>
+                        <p class="cert-desc" 
+                           data-en="Agoda Tech Camp Day 2024">
+                          Agoda Tech Camp Day 2024
+                        </p>
+                    </div>
+
+                    <div class="cert-item">
+                        <div class="cert-img-box">
+                            <!-- เปลี่ยนชื่อไฟล์รูปตรงนี้ -->
+                            <img src="picture/cert5.jpg" alt="Certificate 3">
+                        </div>
+                        <p class="cert-desc" 
+                           data-en="Generative Ai Notebook LM">
+                          Generative Ai Notebook LM
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Contact -->
+        <section id="contact" class="content-section">
+            <h2 class="section-title" data-en="Contact">Contact</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p data-en="Let's work together!" data-th="มาทำงานร่วมกันเถอะ!">Let's work together!</p>
+                    <br>
+                    <p><strong>Email:</strong> sureewan.thap@gmail.com</p>
+                    
+                    <!-- ส่วนปุ่ม Social Media ที่เพิ่มเข้ามา -->
+                    <div class="social-icons-container">
+                        
+                        <!-- GitHub -->
+                        <a href="https://github.com/Kubbbbb" target="_blank" class="social-btn github" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/sureewan.thapphasaraphong" target="_blank" class="social-btn facebook" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/meme_ewe/" target="_blank" class="social-btn instagram" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+
+                        <!-- X (Twitter) -->
+                        <a href="https://x.com/yourusername" target="_blank" class="social-btn x-twitter" aria-label="X (Twitter)">
+                            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+
+                    </div>
+                </div>
+
+                
+                <form class="contact-form">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Message" rows="4" required></textarea>
+                    <button type="submit" class="cta-button" data-en="Send Message" data-th="ส่งข้อความ">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+
+            /* ============================= */
+            /* 🔥 Typing Effect Function */
+            /* ============================= */
+            function typeEffect(element, text) {
+                element.innerHTML = "";
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, "text/html");
+                const nodes = Array.from(doc.body.childNodes);
+
+                let i = 0;
+
+                function typeNode(node, parent, callback) {
+
+                    if (node.nodeType === 3) { // Text node
+                        let textContent = node.textContent;
+                        let index = 0;
+
+                        function typeChar() {
+                            if (index < textContent.length) {
+                                parent.append(textContent[index]);
+                                index++;
+                                setTimeout(typeChar, 120);
+                            } else {
+                                callback();
+                            }
+                        }
+
+                        typeChar();
+
+                    } else if (node.nodeType === 1) { // Element node
+                        const newEl = node.cloneNode(false);
+                        parent.appendChild(newEl);
+
+                        const children = Array.from(node.childNodes);
+                        let childIndex = 0;
+
+                        function nextChild() {
+                            if (childIndex < children.length) {
+                                typeNode(children[childIndex], newEl, () => {
+                                    childIndex++;
+                                    nextChild();
+                                });
+                            } else {
+                                callback();
+                            }
+                        }
+
+                        nextChild();
+                    }
+                }
+
+                function next() {
+                    if (i < nodes.length) {
+                        typeNode(nodes[i], element, () => {
+                            i++;
+                            next();
+                        });
+                    }
+                }
+
+                next();
+            }
+
+
+
+            /* ============================= */
+            /* 🌍 Language Switch Logic */
+            /* ============================= */
+            const thBtn = document.getElementById("lang-th");
+            const enBtn = document.getElementById("lang-en");
+
+            function setLanguage(lang) {
+                document.querySelectorAll("[data-th]").forEach(el => {
+                    const text = el.getAttribute(`data-${lang}`);
+
+                    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+                        el.placeholder = text;
+
+                    } else if (el.id === "typing-text") {
+                        typeEffect(el, text);
+
+                    } else {
+                        el.innerHTML = text;
+                    }
+                });
+
+                thBtn.classList.toggle("active", lang === "th");
+                enBtn.classList.toggle("active", lang === "en");
+                localStorage.setItem("lang", lang);
+                document.documentElement.lang = lang;
+            }
+
+            thBtn.onclick = () => setLanguage("th");
+            enBtn.onclick = () => setLanguage("en");
+
+            const savedLang = localStorage.getItem("lang") || "en";
+            setLanguage(savedLang);
+
+
+            /* ============================= */
+            /* 📱 Mobile Menu Logic */
+            /* ============================= */
+            const hamburger = document.getElementById("hamburger");
+            const sidebar = document.querySelector(".sidebar");
+
+            hamburger.onclick = () => sidebar.classList.toggle("active");
+
+
+            /* ============================= */
+            /* 👀 Scroll Animation */
+            /* ============================= */
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.nav-menu a').forEach(a => {
+                            a.classList.toggle(
+                                'active',
+                                a.getAttribute('href') === `#${id}`
+                            );
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+
+
+            /* ============================= */
+            /* 🧭 Smooth Scroll */
+            /* ============================= */
+            document.querySelectorAll('.nav-menu a').forEach(anchor => {
+                anchor.onclick = function(e) {
+                    e.preventDefault();
+                    sidebar.classList.remove("active");
+
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId)
+                        .scrollIntoView({ behavior: 'smooth' });
+                };
+            });
+
+        });
+    </script>
+
+</body>
+</html>
